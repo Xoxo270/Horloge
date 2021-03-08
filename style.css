@@ -1,0 +1,18 @@
+body {
+    background: #1c1b1b;
+    font-size: 48px;
+    text-align: center;
+    color: white;
+}
+
+#titre {
+    background: rgb(43, 42, 42);
+}
+
+#clock {
+    background: black;
+}
+
+.AMPM {
+margin : auto;
+}

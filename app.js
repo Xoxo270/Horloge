@@ -18,6 +18,7 @@ const switchButton = () => {
   switchFormat();
 }
 
+/* Commentaire de test pour push git */
 document.getElementById('list-box').onchange = () => {
   switchFormat();
 }

@@ -16,3 +16,6 @@ body {
 .AMPM {
 margin : auto;
 }
+.clock {
+    background: black;
+}

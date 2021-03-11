@@ -18,7 +18,6 @@ const switchButton = () => {
   switchFormat();
 }
 
-/* Commentaire de test pour push git */
 document.getElementById('list-box').onchange = () => {
   switchFormat();
 }
@@ -36,6 +35,18 @@ const ampmFunc = (time) => {
     clock.innerText = heures + ":" + minutes + ":" + secondes + " AM";
   }
 }
+
+const addClock = () => {
+  const addClockBtn = document.getElementById('clockTwo');
+  const newClock = "toto";
+  addClockBtn.append(newClock);
+
+}
+
+
+
+
+
 setInterval(switchFormat, 1000);
 switchFormat();
 

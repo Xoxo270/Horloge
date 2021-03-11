@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="titre">Heure locale</div>
-    <div id="clock"></div>  
+    <div id="clock" class="clock"></div>  
     <button onclick="switchButton()"> changer le format </button>
     <select name="listbox" id="list-box">
         <option selected='true' value="+00:00">Greenwich Mean Time</option>
@@ -38,6 +38,8 @@
         <option value="-11:00">Nome Time GMT-11</option>
         <option value="-12:00">International Date Line West GMT-12</option>
     </select>
+    <div id="clockTwo"></div>
+    <button class='addClockBtn' onclick="addClock()"> Ajouter une horloge </button>
 <script src="app.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 let isStandardTime = true;
 
-const switchFormat = () => {
+const initTime = () => {
   const clock = document.getElementById('clock');
   const listBox = document.getElementById('list-box');
   const date = new Date();
@@ -15,11 +15,11 @@ const switchFormat = () => {
 
 const switchButton = () => {
   isStandardTime = !isStandardTime;
-  switchFormat();
+  initTime();
 }
 
 document.getElementById('list-box').onchange = () => {
-  switchFormat();
+  initTime();
 }
 
 const ampmFunc = (time) => {
@@ -37,18 +37,16 @@ const ampmFunc = (time) => {
 }
 
 const addClock = () => {
-  const addClockBtn = document.getElementById('clockTwo');
-  const newClock = "toto";
-  addClockBtn.append(newClock);
+  const divClock = document.getElementById('divClock');
+  const newClock = document.createElement('div');
+  newClock.classList.add('clock');
+  divClock.appendChild(newClock);
 
 }
 
 
-
-
-
-setInterval(switchFormat, 1000);
-switchFormat();
+setInterval(initTime, 1000);
+initTime();
 
 /* To-do list :
 - option AM/PM. done

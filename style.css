@@ -18,4 +18,8 @@ margin : auto;
 }
 .clock {
     background: black;
+    border: white solid;
+    border-width: 2px 4px 2px 4px;
+    margin-bottom: 12px;
+    height: 70px;
 }

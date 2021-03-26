@@ -18,8 +18,41 @@ class clock {
 /* Met à jour l'heure des horloges simultanément */
 const updateClock = () => {
   clocks.forEach((item) => {
-    item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
-    item.container.innerHTML = item.time.toLocaleTimeString();
+    if (isStandardTime) {
+      item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
+      item.container.innerHTML = item.time.toLocaleTimeString();
+    } else {
+      item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
+      let heures = item.time.getHours();
+      let minutes = item.time.getMinutes();
+      let secondes = item.time.getSeconds();
+    
+      if ( heures > 12 ){
+        heures = heures - 12;
+        if (heures < 10 ){
+          heures = `0${heures}`;
+        }else;
+        if (minutes < 10 ){
+          minutes = `0${minutes}`;
+        }else;
+        if (secondes < 10 ){
+          secondes = `0${secondes}`;
+        }else;
+        item.container.innerText = `${heures}:${minutes}:${secondes} PM`;
+      } else {
+        if (heures < 10 ){
+          heures = `0${heures}`;
+        }else;
+        if (minutes < 10 ){
+          minutes = `0${minutes}`;
+        }else;
+        if (secondes < 10 ){
+          secondes = `0${secondes}`;
+        }else;
+        item.container.innerText = `${heures}:${minutes}:${secondes} AM`;
+      }
+    }
+
   });
 };
 
@@ -37,27 +70,6 @@ document.getElementById('list-box').onchange = () => {
 /* Change le booléen isStandardTime au clic du bouton switchButton */
 const switchButton = () => {
   isStandardTime = !isStandardTime;
-  if (isStandardTime) {
-    updateClock();
-  } else {
-    ampmFunc(time);
-    console.log("time : " + time);
-  }
-}
-
-// WIP 
-const ampmFunc = (time) => {
-  const clock = document.getElementById('clock');
-  let heures = time.getHours();
-  const minutes = time.getMinutes();
-  const secondes = time.getSeconds();
-  
-  if ( heures > 12 ){
-    heures = heures - 12;
-    clock.innerText = heures + ":" + minutes + ":" + secondes + " PM";
-  } else {
-    clock.innerText = heures + ":" + minutes + ":" + secondes + " AM";
-  }
 }
 
 /* Lance la mise à jour des horloges toutes les 1s */

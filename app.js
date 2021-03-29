@@ -1,17 +1,22 @@
 let isStandardTime = true;
-let clocks = []
+let clocks = [];
 
 /* Constructeur d'objets Clock */
 class clock {
-  constructor() { 
+  constructor() {
     this.gmt = document.getElementById('list-box').value;
     this.time = new Date(`${new Date().toUTCString()}${this.gmt}`);
     clocks.push(this);
     this.container = document.createElement('div');
     this.container.classList.add('clock');
+    this.container.setAttribute("onmousedown", "formatChange()")
+    this.container.setAttribute("oncontextmenu", "return false;")
     const divClock = document.getElementById('divClock');
     divClock.appendChild(this.container);
     this.container.innerHTML = this.time.toLocaleTimeString();
+    this.containerx = document.createElement('div');
+    this.containerx.classList.add('supprButton');
+    this.container.appendChild(this.containerx);
   }
 }
 
@@ -26,30 +31,30 @@ const updateClock = () => {
       let heures = item.time.getHours();
       let minutes = item.time.getMinutes();
       let secondes = item.time.getSeconds();
-    
-      if ( heures > 12 ){
+
+      if (heures > 12) {
         heures = heures - 12;
-        if (heures < 10 ){
+        if (heures < 10) {
           heures = `0${heures}`;
-        }else;
-        if (minutes < 10 ){
+        } else;
+        if (minutes < 10) {
           minutes = `0${minutes}`;
-        }else;
-        if (secondes < 10 ){
+        } else;
+        if (secondes < 10) {
           secondes = `0${secondes}`;
-        }else;
-        item.container.innerText = `${heures}:${minutes}:${secondes} PM`;
+        } else;
+          item.container.innerText = `${heures}:${minutes}:${secondes} PM`;
       } else {
-        if (heures < 10 ){
+        if (heures < 10) {
           heures = `0${heures}`;
-        }else;
-        if (minutes < 10 ){
+        } else;
+        if (minutes < 10) {
           minutes = `0${minutes}`;
-        }else;
-        if (secondes < 10 ){
+        } else;
+        if (secondes < 10) {
           secondes = `0${secondes}`;
-        }else;
-        item.container.innerText = `${heures}:${minutes}:${secondes} AM`;
+        } else;
+          item.container.innerText = `${heures}:${minutes}:${secondes} AM`;
       }
     }
 
@@ -67,9 +72,12 @@ document.getElementById('list-box').onchange = () => {
   updateClock();
 }
 
-/* Change le booléen isStandardTime au clic du bouton switchButton */
-const switchButton = () => {
-  isStandardTime = !isStandardTime;
+/* Change le format de l'heure lorsqu'on clic droit sur une horloge */
+const formatChange = () => {
+  if (event.buttons === 2) {
+    isStandardTime = !isStandardTime;
+    updateClock();
+  }
 }
 
 /* Lance la mise à jour des horloges toutes les 1s */

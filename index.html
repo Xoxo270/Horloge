@@ -5,39 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto&display=swap');
+    </style> 
     <title>Heure locale</title>
 </head>
-<body>
-    <div id="titre">Heure locale</div>
+<body id="body">
+    <header>
+        <div class="headerbox">
+            <h1 id="titre">Heure locale</h1>
+        </div>
+        <div class="headerbox">
+            <select name="listbox" id="list-box" class="menu">
+                <option selected='true' value="+00:00">Greenwich Mean Time</option>
+                <option value="+01:00">Central European Time GMT+1</option>
+                <option value="+02:00">Eastern European Time GMT+2</option>
+                <option value="+03:00">Moscow Time GMT+3</option>
+                <option value="+04:00">Armenia Time GMT+4</option>
+                <option value="+05:00">Pakistan Standard Time GMT+5</option>
+                <option value="+06:00">Omsk Time GMT+6</option>
+                <option value="+07:00">Kranoyask Time GMT+7</option>
+                <option value="+08:00">China Standard Time GMT+8</option>
+                <option value="+09:00">Japan Standard Time GMT+9</option>
+                <option value="+10:00">Eastern Australia Standard Time GMT+10</option>
+                <option value="+11:00">Sakhalin Time GMT+11</option>
+                <option value="+12:00">New Zealand Standard Time GMT+12</option>
+                <option value="-01:00">West Africa Time GMT-1</option>
+                <option value="-02:00">Azores Time GMT-2</option>
+                <option value="-03:00">Argentina Time GMT-3</option>
+                <option value="-04:00">Atlantic Standard Time GMT-4</option>
+                <option value="-05:00">Eastern Standard Time GMT-5</option>
+                <option value="-06:00">Central Standard Time GMT-6</option>
+                <option value="-07:00">Mountain Standard Time GMT-7</option>
+                <option value="-08:00">Pacific Standard Time GMT-8</option>
+                <option value="-09:00">Alaska Standard Time GMT-9</option>
+                <option value="-10:00">Hawaii Standard Time GMT-10</option>
+                <option value="-11:00">Nome Time GMT-11</option>
+                <option value="-12:00">International Date Line West GMT-12</option>
+            </select>
+        </div>
+        <div class="headerbox">
+            <button class='addClockBtn menu' onclick="addClock()"> Ajouter une horloge </button>
+        </div>
+    </header>
     <div id="divClock"></div>
-    <select name="listbox" id="list-box">
-        <option selected='true' value="+00:00">Greenwich Mean Time</option>
-        <option value="+01:00">Central European Time GMT+1</option>
-        <option value="+02:00">Eastern European Time GMT+2</option>
-        <option value="+03:00">Moscow Time GMT+3</option>
-        <option value="+04:00">Armenia Time GMT+4</option>
-        <option value="+05:00">Pakistan Standard Time GMT+5</option>
-        <option value="+06:00">Omsk Time GMT+6</option>
-        <option value="+07:00">Kranoyask Time GMT+7</option>
-        <option value="+08:00">China Standard Time GMT+8</option>
-        <option value="+09:00">Japan Standard Time GMT+9</option>
-        <option value="+10:00">Eastern Australia Standard Time GMT+10</option>
-        <option value="+11:00">Sakhalin Time GMT+11</option>
-        <option value="+12:00">New Zealand Standard Time GMT+12</option>
-        <option value="-01:00">West Africa Time GMT-1</option>
-        <option value="-02:00">Azores Time GMT-2</option>
-        <option value="-03:00">Argentina Time GMT-3</option>
-        <option value="-04:00">Atlantic Standard Time GMT-4</option>
-        <option value="-05:00">Eastern Standard Time GMT-5</option>
-        <option value="-06:00">Central Standard Time GMT-6</option>
-        <option value="-07:00">Mountain Standard Time GMT-7</option>
-        <option value="-08:00">Pacific Standard Time GMT-8</option>
-        <option value="-09:00">Alaska Standard Time GMT-9</option>
-        <option value="-10:00">Hawaii Standard Time GMT-10</option>
-        <option value="-11:00">Nome Time GMT-11</option>
-        <option value="-12:00">International Date Line West GMT-12</option>
-    </select>
-    <button class='addClockBtn' onclick="addClock()"> Ajouter une horloge </button>
 <script src="app.js"></script>
 </body>
 </html>

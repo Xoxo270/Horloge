@@ -9,14 +9,18 @@ class clock {
     clocks.push(this);
     this.container = document.createElement('div');
     this.container.classList.add('clock');
-    this.container.setAttribute("onmousedown", "formatChange()")
-    this.container.setAttribute("oncontextmenu", "return false;")
+    this.container.onmousedown = () => {formatChange()};
+    this.container.oncontextmenu = () => {return false};
     const divClock = document.getElementById('divClock');
     divClock.appendChild(this.container);
-    this.container.innerHTML = this.time.toLocaleTimeString();
-    this.containerx = document.createElement('div');
-    this.containerx.classList.add('supprButton');
-    this.container.appendChild(this.containerx);
+    this.hourParagraph = document.createElement('p');
+    this.hourParagraph.classList.add('hourParagraph');
+    this.container.appendChild(this.hourParagraph);
+    this.button = document.createElement('button');
+    this.button.classList.add('supprButton');
+    this.container.appendChild(this.button);
+    this.button.onclick = () => {deleteClock()};
+    this.hourParagraph.innerHTML = this.time.toLocaleTimeString();
   }
 }
 
@@ -25,7 +29,7 @@ const updateClock = () => {
   clocks.forEach((item) => {
     if (isStandardTime) {
       item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
-      item.container.innerHTML = item.time.toLocaleTimeString();
+      item.hourParagraph.innerHTML = item.time.toLocaleTimeString();
     } else {
       item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
       let heures = item.time.getHours();
@@ -43,7 +47,7 @@ const updateClock = () => {
         if (secondes < 10) {
           secondes = `0${secondes}`;
         } else;
-          item.container.innerText = `${heures}:${minutes}:${secondes} PM`;
+          item.hourParagraph.innerText = `${heures}:${minutes}:${secondes} PM`;
       } else {
         if (heures < 10) {
           heures = `0${heures}`;
@@ -54,7 +58,7 @@ const updateClock = () => {
         if (secondes < 10) {
           secondes = `0${secondes}`;
         } else;
-          item.container.innerText = `${heures}:${minutes}:${secondes} AM`;
+          item.hourParagraph.innerText = `${heures}:${minutes}:${secondes} AM`;
       }
     }
 
@@ -80,8 +84,36 @@ const formatChange = () => {
   }
 }
 
+const deleteClock = () => {
+  console.log(event.target.parentNode);
+  // console.log(event.target);
+  // console.log(event);
+  event.target.parentNode.remove();
+  console.log(clocks);
+}
+
 /* Lance la mise à jour des horloges toutes les 1s */
 setInterval(updateClock, 1000);
 
 /* Création d'une horloge au lancement de la page */
 new clock();
+
+/* Changement de background dynamique */
+let bodyDiv = document.getElementById('body');
+
+const backgrounds = new Array(
+    'url(images/nightSky.jpg)'
+  , 'url(images/lake.jpg)'
+  , 'url(images/darkGravel.jpg)'
+  , 'url(images/rainyDay.jpg)'
+);
+let current = 0;
+
+let nextBackground = () => {
+  current++;
+  current = current % backgrounds.length;
+  bodyDiv.style.background = backgrounds[current];
+}
+setInterval(nextBackground, 10000);
+
+bodyDiv.style.background = backgrounds[0];

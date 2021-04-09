@@ -16,11 +16,17 @@ class clock {
     this.hourParagraph = document.createElement('p');
     this.hourParagraph.classList.add('hourParagraph');
     this.container.appendChild(this.hourParagraph);
-    this.button = document.createElement('button');
+    this.button = document.createElement('p');
     this.button.classList.add('supprButton');
     this.container.appendChild(this.button);
-    this.button.onclick = () => {deleteClock()};
+    this.button.onclick = () => {this.deleteClock()};
     this.hourParagraph.innerHTML = this.time.toLocaleTimeString();
+  }
+
+  deleteClock = () => {
+    event.target.parentNode.remove();
+    clocks.splice(this.id, 1);
+    console.log(clocks);
   }
 }
 
@@ -68,6 +74,7 @@ const updateClock = () => {
 /* Ajoute une nouvelle horloge lorsqu'on clique sur le bouton d'ajout */
 const addClock = () => {
   new clock();
+  clocks.forEach((clock, i) => clock.id = i);
 }
 
 /* Change l'heure de la première horloge lorsqu'on sélectionne un autre fuseau horaire. */
@@ -84,14 +91,6 @@ const formatChange = () => {
   }
 }
 
-const deleteClock = () => {
-  console.log(event.target.parentNode);
-  // console.log(event.target);
-  // console.log(event);
-  event.target.parentNode.remove();
-  console.log(clocks);
-}
-
 /* Lance la mise à jour des horloges toutes les 1s */
 setInterval(updateClock, 1000);
 
@@ -99,21 +98,26 @@ setInterval(updateClock, 1000);
 new clock();
 
 /* Changement de background dynamique */
-let bodyDiv = document.getElementById('body');
+const backgroundChange = () => {
+  let bodyDiv = document.getElementById('body');
 
-const backgrounds = new Array(
-    'url(images/nightSky.jpg)'
-  , 'url(images/lake.jpg)'
-  , 'url(images/darkGravel.jpg)'
-  , 'url(images/rainyDay.jpg)'
-);
-let current = 0;
+  const backgrounds = new Array(
+      'url(images/nightSky.jpg)'
+    , 'url(images/lake.jpg)'
+    , 'url(images/rainyDay.jpg)'
+    , 'url(images/lakeView.jpg)'
+    , 'url(images/fallRoad.jpg)'
+  );
 
-let nextBackground = () => {
-  current++;
-  current = current % backgrounds.length;
-  bodyDiv.style.background = backgrounds[current];
+  let current = 0;
+
+  let nextBackground = () => {
+    current++;
+    current = current % backgrounds.length;
+    bodyDiv.style.backgroundImage = backgrounds[current];
+  }
+  setInterval(nextBackground, 10000);
+
+  bodyDiv.style.backgroundImage = backgrounds[0];
 }
-setInterval(nextBackground, 10000);
-
-bodyDiv.style.background = backgrounds[0];
+backgroundChange();

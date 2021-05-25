@@ -1,0 +1,23 @@
+{
+  "name": "horloge",
+  "version": "1.0.0",
+  "description": "customizable clock",
+  "main": "app.js",
+  "scripts": {
+    "start": "http-server -p 9000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xoxo270/Horloge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xoxo270/Horloge/issues"
+  },
+  "homepage": "https://github.com/Xoxo270/Horloge#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}

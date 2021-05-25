@@ -50,7 +50,13 @@
             <button class='addClockBtn menu' onclick="addClock()"> Ajouter une horloge </button>
         </div>
     </header>
-    <div id="divClock"></div>
+    <div id="divClock" class="divClock"
+    ondrop="onDrop(event);"
+    ></div>
+    <!-- <div id="divClock" class="divClock"
+    ondragover="onDragOver(event);"
+    ondrop="onDrop(event);"
+    ></div> -->
 <script src="app.js"></script>
 </body>
 </html>

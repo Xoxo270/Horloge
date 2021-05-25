@@ -28,6 +28,7 @@ body {
     margin-top: 2vh;
     display: flex;
     flex-direction: row;
+    cursor: grab;
 }
 
 .hourParagraph {
@@ -40,6 +41,7 @@ body {
     width: 8.5%;
     align-self: center;
     margin-right: 4%;
+    cursor: pointer;
 }
 .menu{
     color: white;

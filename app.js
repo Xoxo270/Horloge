@@ -9,6 +9,9 @@ class clock {
     clocks.push(this);
     this.container = document.createElement('div');
     this.container.classList.add('clock');
+    this.container.setAttribute('draggable','true')
+    this.container.onDragStart = () => {onDragStart(event)}
+
     this.container.onmousedown = () => {formatChange()};
     this.container.oncontextmenu = () => {return false};
     const divClock = document.getElementById('divClock');
@@ -23,10 +26,11 @@ class clock {
     this.hourParagraph.innerHTML = this.time.toLocaleTimeString();
   }
 
+  /* Methode pour delete l'horloge */
   deleteClock = () => {
     event.target.parentNode.remove();
     clocks.splice(this.id, 1);
-    console.log(clocks);
+    clocks.forEach((clock, i) => clock.id = i);
   }
 }
 
@@ -100,7 +104,7 @@ new clock();
 /* Changement de background dynamique */
 const backgroundChange = () => {
   let bodyDiv = document.getElementById('body');
-
+  let current = 0;
   const backgrounds = new Array(
       'url(images/nightSky.jpg)'
     , 'url(images/lake.jpg)'
@@ -108,8 +112,6 @@ const backgroundChange = () => {
     , 'url(images/lakeView.jpg)'
     , 'url(images/fallRoad.jpg)'
   );
-
-  let current = 0;
 
   let nextBackground = () => {
     current++;
@@ -121,3 +123,77 @@ const backgroundChange = () => {
   bodyDiv.style.backgroundImage = backgrounds[0];
 }
 backgroundChange();
+
+/* Drag & Drop function */
+
+function handleDragStart(e) {
+  this.style.opacity = '0.4';
+}
+
+function handleDragEnd(e) {
+  this.style.opacity = '1';
+  items.forEach(function (item) {
+    item.classList.remove('over');
+  });
+}
+
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+
+  return false;
+}
+
+function handleDragEnter(e) {
+  this.classList.add('over');
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('over');
+}
+
+function handleDrop(e) {
+  e.stopPropagation();
+  return false;
+}
+
+let items = document.querySelectorAll('.divClock .clock');
+items.forEach(function(item) {
+  item.addEventListener('dragstart', handleDragStart, false);
+  item.addEventListener('dragend', handleDragEnd, false);
+  item.addEventListener('dragenter', handleDragEnter, false);
+  item.addEventListener('dragleave', handleDragLeave, false);
+  item.addEventListener('dragend', handleDragEnd, false);
+});
+
+
+
+
+
+
+// function onDragStart(event) {
+//   event
+//     .dataTransfer
+//     .setData('text/plain', event.target.id);
+
+//   event
+//     .currentTarget
+//     .style
+//     .backgroundColor = 'yellow';
+// }
+// function onDragOver(event) {
+//   event.preventDefault();
+// }
+
+// function onDrop(event) {
+//   const id = event
+//     .dataTransfer
+//     .getData('text');
+//   const draggableElement = document.getElementById(id);
+//   const dropzone = event.target;
+//   dropzone.appendChild(draggableElement);
+//   event
+//     .dataTransfer
+//     .clearData();
+// }

@@ -50,3 +50,7 @@ Generated\ Files/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+
+# Idea
+*.iml
+.idea/

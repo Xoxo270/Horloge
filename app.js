@@ -50,24 +50,24 @@ const updateClock = () => {
         heures = heures - 12;
         if (heures < 10) {
           heures = `0${heures}`;
-        } else;
+        }
         if (minutes < 10) {
           minutes = `0${minutes}`;
-        } else;
+        }
         if (secondes < 10) {
           secondes = `0${secondes}`;
-        } else;
+        }
           item.hourParagraph.innerText = `${heures}:${minutes}:${secondes} PM`;
       } else {
         if (heures < 10) {
           heures = `0${heures}`;
-        } else;
+        }
         if (minutes < 10) {
           minutes = `0${minutes}`;
-        } else;
+        }
         if (secondes < 10) {
           secondes = `0${secondes}`;
-        } else;
+        }
           item.hourParagraph.innerText = `${heures}:${minutes}:${secondes} AM`;
       }
     }
@@ -105,13 +105,13 @@ new clock();
 const backgroundChange = () => {
   let bodyDiv = document.getElementById('body');
   let current = 0;
-  const backgrounds = new Array(
-      'url(images/nightSky.jpg)'
-    , 'url(images/lake.jpg)'
-    , 'url(images/rainyDay.jpg)'
-    , 'url(images/lakeView.jpg)'
-    , 'url(images/fallRoad.jpg)'
-  );
+  const backgrounds = [
+    'url(images/nightSky.jpg)',
+    'url(images/lake.jpg)',
+    'url(images/rainyDay.jpg)',
+    'url(images/lakeView.jpg)',
+    'url(images/fallRoad.jpg)',
+  ];
 
   let nextBackground = () => {
     current++;

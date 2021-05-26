@@ -126,74 +126,106 @@ backgroundChange();
 
 /* Drag & Drop function */
 
-function handleDragStart(e) {
-  this.style.opacity = '0.4';
-}
+// function handleDragStart(e) {
+//   this.style.opacity = '0.4';
+// }
 
-function handleDragEnd(e) {
-  this.style.opacity = '1';
-  items.forEach(function (item) {
-    item.classList.remove('over');
-  });
-}
+// function handleDragEnd(e) {
+//   this.style.opacity = '1';
+//   items.forEach(function (item) {
+//     item.classList.remove('over');
+//   });
+// }
 
-function handleDragOver(e) {
-  if (e.preventDefault) {
-    e.preventDefault();
+// function handleDragOver(e) {
+//   if (e.preventDefault) {
+//     e.preventDefault();
+//   }
+
+//   return false;
+// }
+
+// function handleDragEnter(e) {
+//   this.classList.add('over');
+// }
+
+// function handleDragLeave(e) {
+//   this.classList.remove('over');
+// }
+
+// function handleDrop(e) {
+//   e.stopPropagation();
+//   return false;
+// }
+
+// let items = document.querySelectorAll('.divClock .clock');
+// items.forEach(function(item) {
+//   item.addEventListener('dragstart', handleDragStart, false);
+//   item.addEventListener('dragend', handleDragEnd, false);
+//   item.addEventListener('dragenter', handleDragEnter, false);
+//   item.addEventListener('dragleave', handleDragLeave, false);
+//   item.addEventListener('dragend', handleDragEnd, false);
+// });
+document.addEventListener('DOMContentLoaded', (event) => {
+
+  var dragSrcEl = null;
+  
+  function handleDragStart(e) {
+    this.style.opacity = '0.4';
+    
+    dragSrcEl = this;
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
   }
 
-  return false;
-}
+  function handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
 
-function handleDragEnter(e) {
-  this.classList.add('over');
-}
+    e.dataTransfer.dropEffect = 'move';
+    
+    return false;
+  }
 
-function handleDragLeave(e) {
-  this.classList.remove('over');
-}
+  function handleDragEnter(e) {
+    this.classList.add('over');
+  }
 
-function handleDrop(e) {
-  e.stopPropagation();
-  return false;
-}
+  function handleDragLeave(e) {
+    this.classList.remove('over');
+  }
 
-let items = document.querySelectorAll('.divClock .clock');
-items.forEach(function(item) {
-  item.addEventListener('dragstart', handleDragStart, false);
-  item.addEventListener('dragend', handleDragEnd, false);
-  item.addEventListener('dragenter', handleDragEnter, false);
-  item.addEventListener('dragleave', handleDragLeave, false);
-  item.addEventListener('dragend', handleDragEnd, false);
+  function handleDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation(); // stops the browser from redirecting.
+    }
+    
+    if (dragSrcEl != this) {
+      dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text/html');
+    }
+    
+    return false;
+  }
+
+  function handleDragEnd(e) {
+    this.style.opacity = '1';
+    
+    items.forEach(function (item) {
+      item.classList.remove('over');
+    });
+  }
+  
+  
+  let items = document.querySelectorAll('.container .clock');
+  items.forEach(function(item) {
+    item.addEventListener('dragstart', handleDragStart, false);
+    item.addEventListener('dragenter', handleDragEnter, false);
+    item.addEventListener('dragover', handleDragOver, false);
+    item.addEventListener('dragleave', handleDragLeave, false);
+    item.addEventListener('drop', handleDrop, false);
+    item.addEventListener('dragend', handleDragEnd, false);
+  });
 });
-
-
-
-
-
-
-// function onDragStart(event) {
-//   event
-//     .dataTransfer
-//     .setData('text/plain', event.target.id);
-
-//   event
-//     .currentTarget
-//     .style
-//     .backgroundColor = 'yellow';
-// }
-// function onDragOver(event) {
-//   event.preventDefault();
-// }
-
-// function onDrop(event) {
-//   const id = event
-//     .dataTransfer
-//     .getData('text');
-//   const draggableElement = document.getElementById(id);
-//   const dropzone = event.target;
-//   dropzone.appendChild(draggableElement);
-//   event
-//     .dataTransfer
-//     .clearData();
-// }

@@ -1,0 +1,22 @@
+# Horloge
+
+A customizable clock supporting multiple features, such as time zones, time format, etc.
+
+## Install
+
+```
+npm install
+npm run start
+```
+
+Open `http://localhost:9000` in a browser tab
+
+## TODOs
+- [x] AM/PM toggle through mouse right-click on a clock
+- [x] Multiple time zone support
+- [x] Creation of additional clocks
+- [x] Clock synchronization
+- [x] Clock deletion
+- [ ] Drag and drop support to change the clock order
+- [x] Local HTTP server for development
+- [ ] Add a .gitignore

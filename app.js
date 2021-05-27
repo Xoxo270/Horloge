@@ -10,7 +10,7 @@ class clock {
     this.container = document.createElement('div');
     this.container.classList.add('clock');
     this.container.setAttribute('draggable','true')
-    this.container.onDragStart = () => {onDragStart(event)}
+    this.container.onDragStart = (event) => { onDragStart(event) }
 
     this.container.onmousedown = () => {formatChange()};
     this.container.oncontextmenu = () => {return false};
@@ -22,12 +22,12 @@ class clock {
     this.button = document.createElement('p');
     this.button.classList.add('supprButton');
     this.container.appendChild(this.button);
-    this.button.onclick = () => {this.deleteClock()};
+    this.button.onclick = (event) => { this.deleteClock(event) };
     this.hourParagraph.innerHTML = this.time.toLocaleTimeString();
   }
 
   /* Methode pour delete l'horloge */
-  deleteClock = () => {
+  deleteClock = (event) => {
     event.target.parentNode.remove();
     clocks.splice(this.id, 1);
     clocks.forEach((clock, i) => clock.id = i);
@@ -126,8 +126,49 @@ backgroundChange();
 
 /* Drag & Drop function */
 
-document.addEventListener('DOMContentLoaded', (event) => {
+// function handleDragStart(e) {
+//   this.style.opacity = '0.4';
+// }
 
+// function handleDragEnd(e) {
+//   this.style.opacity = '1';
+//   items.forEach(function (item) {
+//     item.classList.remove('over');
+//   });
+// }
+
+// function handleDragOver(e) {
+//   if (e.preventDefault) {
+//     e.preventDefault();
+//   }
+
+//   return false;
+// }
+
+// function handleDragEnter(e) {
+//   this.classList.add('over');
+// }
+
+// function handleDragLeave(e) {
+//   this.classList.remove('over');
+// }
+
+// function handleDrop(e) {
+//   e.stopPropagation();
+//   return false;
+// }
+
+// let items = document.querySelectorAll('.divClock .clock');
+// items.forEach(function(item) {
+//   item.addEventListener('dragstart', handleDragStart, false);
+//   item.addEventListener('dragend', handleDragEnd, false);
+//   item.addEventListener('dragenter', handleDragEnter, false);
+//   item.addEventListener('dragleave', handleDragLeave, false);
+//   item.addEventListener('dragend', handleDragEnd, false);
+// });
+document.addEventListener('DOMContentLoaded', () => {
+  let dragSrcEl = null;
+  
   function handleDragStart(e) {
     this.style.opacity = '0.4';
   }
@@ -148,14 +189,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return false;
   }
 
-  function handleDragEnter(e) {
+  function handleDragEnter() {
     this.classList.add('over');
   }
 
-  function handleDragLeave(e) {
+  function handleDragLeave() {
     this.classList.remove('over');
   }
 
+  function handleDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation(); // stops the browser from redirecting.
+    }
+    
+    if (dragSrcEl !== this) {
+      dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text/html');
+    }
+    
+    return false;
+  }
+
+  function handleDragEnd() {
+    this.style.opacity = '1';
+    
+    items.forEach(function (item) {
+      item.classList.remove('over');
+    });
+  }
+  
+  
   let items = document.querySelectorAll('.container .clock');
   items.forEach(function(item) {
     item.addEventListener('dragstart', handleDragStart, false);

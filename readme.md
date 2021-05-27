@@ -19,4 +19,6 @@ Open `http://localhost:9000` in a browser tab
 - [x] Clock deletion
 - [ ] Drag and drop support to change the clock order
 - [x] Local HTTP server for development
-- [ ] Add a .gitignore
+- [x] Add a .gitignore
+- [ ] Add a linter
+- [ ] Create a new script command in the package.json to run the linter

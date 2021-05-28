@@ -31,6 +31,10 @@ body {
     cursor: grab;
 }
 
+.clock > * {
+    pointer-events: none;
+}
+
 .hourParagraph {
     margin: auto;
 }
@@ -91,4 +95,8 @@ h1 {
 .leftHeader > img {
     width: 20%;
     height: 100%;
+}
+
+.drag-over {
+    outline: 3px dotted red;
 }

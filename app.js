@@ -1,5 +1,6 @@
 let isStandardTime = true;
 let clocks = [];
+let dragSrcEl;
 
 /* Constructeur d'objets Clock */
 class clock {
@@ -10,9 +11,14 @@ class clock {
     this.container = document.createElement('div');
     this.container.classList.add('clock');
     this.container.setAttribute('draggable','true')
-    this.container.onDragStart = (event) => { onDragStart(event) }
+    this.container.addEventListener('dragstart', (e) => this.handleDragStart(e, this.container));
+    this.container.addEventListener('dragend', (e) => this.handleDragEnd(e, this.container));
+    this.container.addEventListener('dragenter', (e) => this.handleDragEnter(e, this.container));
+    this.container.addEventListener('dragleave', (e) => this.handleDragLeave(e, this.container));
+    this.container.addEventListener('dragover', (e) => this.handleDragOver(e));
+    this.container.addEventListener('drop', (e) => this.handleDrop( e, this.container));
 
-    this.container.onmousedown = () => {formatChange()};
+    this.container.onmousedown = (event) => { formatChange(event) };
     this.container.oncontextmenu = () => {return false};
     const divClock = document.getElementById('divClock');
     divClock.appendChild(this.container);
@@ -31,6 +37,41 @@ class clock {
     event.target.parentNode.remove();
     clocks.splice(this.id, 1);
     clocks.forEach((clock, i) => clock.id = i);
+  }
+
+  handleDragStart(event, clock) {
+    console.log('event start', event);
+    clock.style.opacity = 0.4;
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/html', clock.innerHTML);
+    dragSrcEl = clock;
+  }
+
+  handleDragEnd(event, clock) {
+    console.log('event end', event);
+    clock.style.opacity = 1;
+  }
+
+  handleDragEnter(event, clock) {
+    console.log('event enter', event);
+    clock.classList.add('drag-over');
+  }
+
+  handleDragOver(event) {
+    event.preventDefault();
+  }
+
+  handleDragLeave(event, clock) {
+    console.log('event leave', event);
+    clock.classList.remove('drag-over');
+  }
+
+  handleDrop(event, target) {
+    if (dragSrcEl !== target) {
+      target.classList.remove('drag-over');
+      dragSrcEl.innerHTML = target.innerHTML;
+      target.innerHTML = event.dataTransfer.getData('text/html');
+    }
   }
 }
 
@@ -88,7 +129,7 @@ document.getElementById('list-box').onchange = () => {
 }
 
 /* Change le format de l'heure lorsqu'on clic droit sur une horloge */
-const formatChange = () => {
+const formatChange = (event) => {
   if (event.buttons === 2) {
     isStandardTime = !isStandardTime;
     updateClock();
@@ -124,67 +165,3 @@ const backgroundChange = () => {
 }
 backgroundChange();
 
-/* Drag & Drop function */
-
-document.addEventListener('DOMContentLoaded', () => {
-  let dragSrcEl = null;
-  
-  function handleDragStart(e) {
-    this.style.opacity = '0.4';
-  }
-
-  function handleDragEnd(e) {
-    this.style.opacity = '1';
-
-    items.forEach(function (item) {
-      item.classList.remove('over');
-    });
-  }
-
-  function handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault();
-    }
-
-    return false;
-  }
-
-  function handleDragEnter() {
-    this.classList.add('over');
-  }
-
-  function handleDragLeave() {
-    this.classList.remove('over');
-  }
-
-  function handleDrop(e) {
-    if (e.stopPropagation) {
-      e.stopPropagation(); // stops the browser from redirecting.
-    }
-    
-    if (dragSrcEl !== this) {
-      dragSrcEl.innerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData('text/html');
-    }
-    
-    return false;
-  }
-
-  function handleDragEnd() {
-    this.style.opacity = '1';
-    
-    items.forEach(function (item) {
-      item.classList.remove('over');
-    });
-  }
-  
-  
-  let items = document.querySelectorAll('.container .clock');
-  items.forEach(function(item) {
-    item.addEventListener('dragstart', handleDragStart, false);
-    item.addEventListener('dragover', handleDragOver, false);
-    item.addEventListener('dragenter', handleDragEnter, false);
-    item.addEventListener('dragleave', handleDragLeave, false);
-    item.addEventListener('dragend', handleDragEnd, false);
-  });
-});

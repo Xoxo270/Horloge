@@ -40,7 +40,6 @@ class clock {
   }
 
   handleDragStart(event, clock) {
-    console.log('event start', event);
     clock.style.opacity = 0.4;
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/html', clock.innerHTML);
@@ -48,12 +47,10 @@ class clock {
   }
 
   handleDragEnd(event, clock) {
-    console.log('event end', event);
     clock.style.opacity = 1;
   }
 
   handleDragEnter(event, clock) {
-    console.log('event enter', event);
     clock.classList.add('drag-over');
   }
 
@@ -62,7 +59,6 @@ class clock {
   }
 
   handleDragLeave(event, clock) {
-    console.log('event leave', event);
     clock.classList.remove('drag-over');
   }
 

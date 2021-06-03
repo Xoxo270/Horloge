@@ -160,4 +160,3 @@ const backgroundChange = () => {
   bodyDiv.style.backgroundImage = backgrounds[0];
 }
 backgroundChange();
-

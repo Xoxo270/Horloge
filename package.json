@@ -19,5 +19,8 @@
   "homepage": "https://github.com/Xoxo270/Horloge#readme",
   "dependencies": {
     "http-server": "^0.12.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0"
   }
 }

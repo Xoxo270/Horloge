@@ -20,6 +20,6 @@ Open `http://localhost:9000` in a browser tab
 - [x] Drag and drop support to change the clock order
 - [x] Local HTTP server for development
 - [x] Add a .gitignore
-- [ ] Add a linter
-- [ ] Create a new script command in the package.json to run the linter
+- [x] Add a linter
+- [x] Create a new script command in the package.json to run the linter
 - [x] Make the clock works with Drag & Drop support

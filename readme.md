@@ -22,4 +22,4 @@ Open `http://localhost:9000` in a browser tab
 - [x] Add a .gitignore
 - [ ] Add a linter
 - [ ] Create a new script command in the package.json to run the linter
-- [ ] Make the clock works with Drag & Drop support
+- [x] Make the clock works with Drag & Drop support

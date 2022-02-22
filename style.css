@@ -31,10 +31,6 @@ body {
     cursor: grab;
 }
 
-.clock > * {
-    pointer-events: none;
-}
-
 .hourParagraph {
     margin: auto;
 }

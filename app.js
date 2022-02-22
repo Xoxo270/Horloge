@@ -1,23 +1,24 @@
 let isStandardTime = true;
 let clocks = [];
 let dragSrcEl;
+let clocksID = 0;
 
 /* Constructeur d'objets Clock */
-class clock {
-  constructor() {
+class Clock {
+  constructor(id) {
     this.gmt = document.getElementById('list-box').value;
     this.time = new Date(`${new Date().toUTCString()}${this.gmt}`);
-    clocks.push(this);
     this.container = document.createElement('div');
     this.container.classList.add('clock');
-    this.container.setAttribute('draggable','true')
+    this.container.setAttribute('draggable','true');
+    this.id = id;
+    this.container.setAttribute('id', this.id);
     this.container.addEventListener('dragstart', (e) => this.handleDragStart(e, this.container));
     this.container.addEventListener('dragend', (e) => this.handleDragEnd(e, this.container));
     this.container.addEventListener('dragenter', (e) => this.handleDragEnter(e, this.container));
     this.container.addEventListener('dragleave', (e) => this.handleDragLeave(e, this.container));
     this.container.addEventListener('dragover', (e) => this.handleDragOver(e));
     this.container.addEventListener('drop', (e) => this.handleDrop( e, this.container));
-
     this.container.onmousedown = (event) => { formatChange(event) };
     this.container.oncontextmenu = () => {return false};
     const divClock = document.getElementById('divClock');
@@ -28,22 +29,32 @@ class clock {
     this.button = document.createElement('p');
     this.button.classList.add('supprButton');
     this.container.appendChild(this.button);
-    this.button.onclick = (event) => { this.deleteClock(event) };
+    this.button.onclick = (event) => {this.deleteClock(event)};
     this.hourParagraph.innerHTML = this.time.toLocaleTimeString();
   }
 
   /* Methode pour delete l'horloge */
-  deleteClock = (event) => {
+  deleteClock(event) {
+    let indexHtml = event.target.parentNode.id;
+    let index = clocks.findIndex((clock) => clock.id === parseInt(indexHtml));
     event.target.parentNode.remove();
-    clocks.splice(this.id, 1);
-    clocks.forEach((clock, i) => clock.id = i);
+    clocks.splice(index, 1);
   }
 
+  /* Drag & Drop */
   handleDragStart(event, clock) {
     clock.style.opacity = 0.4;
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text/html', clock.innerHTML);
     dragSrcEl = clock;
+  }
+
+  handleDrop(event, target) {
+    if (dragSrcEl !== target) {
+      let dragSrcElId = dragSrcEl.attributes.id.nodeValue;
+      let targetId = target.attributes.id.nodeValue;
+      target.attributes.id.nodeValue = dragSrcElId;
+      dragSrcEl.attributes.id.nodeValue = targetId;
+      target.classList.remove('drag-over');
+    }
   }
 
   handleDragEnd(event, clock) {
@@ -61,24 +72,27 @@ class clock {
   handleDragLeave(event, clock) {
     clock.classList.remove('drag-over');
   }
-
-  handleDrop(event, target) {
-    if (dragSrcEl !== target) {
-      target.classList.remove('drag-over');
-      dragSrcEl.innerHTML = target.innerHTML;
-      target.innerHTML = event.dataTransfer.getData('text/html');
-    }
-  }
 }
+
+/* Ajoute une nouvelle horloge et un ID */
+const addClock = () => {
+  clocks.push(new Clock(clocksID));
+  clocksID++;
+}
+
+
 
 /* Met à jour l'heure des horloges simultanément */
 const updateClock = () => {
   clocks.forEach((item) => {
     if (isStandardTime) {
       item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
-      item.hourParagraph.innerHTML = item.time.toLocaleTimeString();
+      let itemHtml = document.getElementById(item.id);
+      itemHtml.firstChild.innerText = item.time.toLocaleTimeString();
+
     } else {
       item.time = new Date(`${new Date().toUTCString()}${item.gmt}`);
+      let itemHtml = document.getElementById(item.id);
       let heures = item.time.getHours();
       let minutes = item.time.getMinutes();
       let secondes = item.time.getSeconds();
@@ -94,7 +108,7 @@ const updateClock = () => {
         if (secondes < 10) {
           secondes = `0${secondes}`;
         }
-          item.hourParagraph.innerText = `${heures}:${minutes}:${secondes} PM`;
+          itemHtml.firstChild.innerText = `${heures}:${minutes}:${secondes} PM`;
       } else {
         if (heures < 10) {
           heures = `0${heures}`;
@@ -105,18 +119,12 @@ const updateClock = () => {
         if (secondes < 10) {
           secondes = `0${secondes}`;
         }
-          item.hourParagraph.innerText = `${heures}:${minutes}:${secondes} AM`;
+          itemHtml.firstChild.innerText = `${heures}:${minutes}:${secondes} AM`;
       }
     }
 
   });
 };
-
-/* Ajoute une nouvelle horloge lorsqu'on clique sur le bouton d'ajout */
-const addClock = () => {
-  new clock();
-  clocks.forEach((clock, i) => clock.id = i);
-}
 
 /* Change l'heure de la première horloge lorsqu'on sélectionne un autre fuseau horaire. */
 document.getElementById('list-box').onchange = () => {
@@ -136,7 +144,7 @@ const formatChange = (event) => {
 setInterval(updateClock, 1000);
 
 /* Création d'une horloge au lancement de la page */
-new clock();
+addClock();
 
 /* Changement de background dynamique */
 const backgroundChange = () => {

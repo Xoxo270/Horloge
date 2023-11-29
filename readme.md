@@ -1,6 +1,6 @@
 # Horloge
 
-A customizable clock supporting multiple features, such as time zones, time format, etc.
+A customizable clock supporting multiple features, such as time zones, time format, drag&drop, add/delete clocks.
 
 ## Install
 
